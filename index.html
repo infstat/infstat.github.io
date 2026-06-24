@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stat-Inf — Learning by sharing</title>
+<meta name="description" content="Stat-Inf is a community of statisticians and computer scientists dedicated to knowledge sharing in data. Founded 2017.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0E1B2C;
+    --paper: #FBFAF7;
+    --signal: #E8552D;        /* warm vermilion — the "share" spark */
+    --signal-deep: #C23E1B;
+    --slate: #5A6B7B;
+    --line: #E2DDD3;
+    --mint: #1F8A70;          /* secondary — stats/data */
+    --card: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── NAV ───────────────────────────────── */
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500; font-size: 17px;
+    letter-spacing: -0.5px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .brand span { color: var(--signal); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    color: var(--slate); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--signal); }
+  @media (max-width: 600px) { .nav-links { display: none; } }
+
+  /* ── HERO ──────────────────────────────── */
+  .hero { padding: 96px 0 80px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--mint);
+    letter-spacing: 0.5px; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow::before {
+    content: ""; width: 28px; height: 1px; background: var(--mint);
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(44px, 7vw, 82px);
+    line-height: 1.02;
+    letter-spacing: -1.5px;
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--signal);
+  }
+  .hero .lede {
+    font-size: clamp(17px, 2vw, 20px);
+    color: var(--slate);
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+  .cta-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 26px;
+    border-radius: 2px;
+    font-size: 15px; font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--signal); color: #fff;
+  }
+  .btn-primary:hover { background: var(--signal-deep); transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--ink); border: 1px solid var(--line);
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  /* ── MOTTO STRIP ───────────────────────── */
+  .motto {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 28px 0;
+    display: flex; align-items: baseline; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .motto .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(20px, 3vw, 28px);
+    color: var(--ink);
+  }
+  .motto .since {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--slate);
+    margin-left: auto;
+  }
+
+  /* ── SECTION HEADERS ───────────────────── */
+  section { padding: 80px 0; }
+  .sec-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; color: var(--slate);
+    letter-spacing: 0.5px; margin-bottom: 12px;
+  }
+  .sec-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -0.8px;
+    margin-bottom: 48px;
+    line-height: 1.1;
+  }
+
+  /* ── ACTIVITIES ────────────────────────── */
+  .activities { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  @media (max-width: 700px) { .activities { grid-template-columns: 1fr; } }
+  .act {
+    background: var(--card);
+    padding: 32px;
+    transition: background 0.2s;
+  }
+  .act:hover { background: #FFFDF9; }
+  .act .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--signal);
+    margin-bottom: 14px;
+  }
+  .act h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600; font-size: 21px;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  .act p { font-size: 14.5px; color: var(--slate); }
+
+  /* ── SERVICES ──────────────────────────── */
+  .services { background: var(--ink); color: var(--paper); }
+  .services .sec-label { color: #8FA3B5; }
+  .services .sec-title { color: var(--paper); }
+  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  @media (max-width: 700px) { .svc-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .svc { border-top: 2px solid var(--signal); padding-top: 16px; }
+  .svc h4 {
+    font-size: 16px; font-weight: 600; margin-bottom: 6px;
+  }
+  .svc p { font-size: 14px; color: #9DAEBD; }
+
+  /* ── CHANNEL CTA ───────────────────────── */
+  .channel { text-align: center; }
+  .channel .sec-title { margin-bottom: 16px; }
+  .channel p { color: var(--slate); max-width: 480px; margin: 0 auto 32px; }
+
+  /* ── FOOTER ────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 48px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 20px;
+  }
+  .footer-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+  }
+  .footer-brand span { color: var(--signal); }
+  .social { display: flex; gap: 24px; }
+  .social a {
+    color: var(--slate); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .social a:hover { color: var(--signal); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a href="#" class="brand">stat<span>·</span>inf</a>
+    <div class="nav-links">
+      <a href="#activities">Activities</a>
+      <a href="#services">Services</a>
+      <a href="#channel">Watch</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<header class="wrap hero">
+  <div class="eyebrow">Community · Since 2017</div>
+  <h1>Statisticians and<br>computer scientists,<br><em>learning by sharing.</em></h1>
+  <p class="lede">Stat-Inf is a community built on one idea: by sharing what we know, we enrich others — and ourselves. Tutorials, concepts, and conversations in statistics, data science, and computing.</p>
+  <div class="cta-row">
+    <a href="#channel" class="btn btn-primary">Watch our tutorials →</a>
+    <a href="#activities" class="btn btn-ghost">See what we do</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="motto">
+    <span class="quote">"In sharing, we enrich others — and ourselves."</span>
+    <span class="since">EST. 2017</span>
+  </div>
+</div>
+
+<section id="activities" class="wrap">
+  <div class="sec-label">01 — What we do</div>
+  <h2 class="sec-title">Activities</h2>
+  <div class="activities">
+    <div class="act">
+      <div class="num">/ live-tuto</div>
+      <h3>Live tutorials</h3>
+      <p>Hands-on sessions, walking through real data tools and methods — from web scraping to missing-data handling in R.</p>
+    </div>
+    <div class="act">
+      <div class="num">/ stat-it</div>
+      <h3>Stat-It</h3>
+      <p>Short, focused explainers on a single concept in statistics or computing. State it, simply.</p>
+    </div>
+    <div class="act">
+      <div class="num">/ metiers</div>
+      <h3>Data careers</h3>
+      <p>Practitioners share their daily work, the skills that matter, and the paths into data professions.</p>
+    </div>
+    <div class="act">
+      <div class="num">/ formations</div>
+      <h3>Free training</h3>
+      <p>Structured courses — from statistical programming in SAS and R to the foundations of data culture.</p>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="services">
+  <div class="wrap">
+    <div class="sec-label">02 — How we help</div>
+    <h2 class="sec-title">Areas of expertise</h2>
+    <div class="svc-grid">
+      <div class="svc">
+        <h4>Data science</h4>
+        <p>From exploratory analysis to modelling and segmentation.</p>
+      </div>
+      <div class="svc">
+        <h4>Biostatistics</h4>
+        <p>High-dimensional methods, including genome sequencing analysis.</p>
+      </div>
+      <div class="svc">
+        <h4>Data engineering</h4>
+        <p>Collection, capture, storage, and the lifecycle of your data.</p>
+      </div>
+      <div class="svc">
+        <h4>Data visualisation</h4>
+        <p>Turning numbers into figures people can actually read.</p>
+      </div>
+      <div class="svc">
+        <h4>Scientific writing</h4>
+        <p>Support for articles, bibliography tools, LaTeX, and version control.</p>
+      </div>
+      <div class="svc">
+        <h4>Training</h4>
+        <p>Tailored courses to build data skills at every level.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="channel" class="wrap channel">
+  <div class="sec-label">03 — On YouTube</div>
+  <h2 class="sec-title">Learn with us</h2>
+  <p>Our channel hosts years of tutorials and explainers in statistics, data science, and computing — in French and English.</p>
+  <a href="https://www.youtube.com/channel/UCV5ZRqbgrMA0R6gvFuNF42A" class="btn btn-primary" target="_blank" rel="noopener">Visit the channel →</a>
+</section>
+
+<footer id="contact" class="wrap">
+  <div class="footer-brand">stat<span>·</span>inf — Learning by sharing</div>
+  <div class="social">
+    <a href="https://www.youtube.com/channel/UCV5ZRqbgrMA0R6gvFuNF42A" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://www.linkedin.com/company/102782403/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://twitter.com/SInformaticiens" target="_blank" rel="noopener">Twitter</a>
+    <a href="https://github.com/infstat" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>
