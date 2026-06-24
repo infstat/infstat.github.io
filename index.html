@@ -5,312 +5,394 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stat-Inf — Learning by sharing</title>
 <meta name="description" content="Stat-Inf is a community of statisticians and computer scientists dedicated to knowledge sharing in data. Founded 2017.">
+<link rel="icon" type="image/png" href="assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0E1B2C;
-    --paper: #FBFAF7;
-    --signal: #E8552D;        /* warm vermilion — the "share" spark */
-    --signal-deep: #C23E1B;
-    --slate: #5A6B7B;
-    --line: #E2DDD3;
-    --mint: #1F8A70;          /* secondary — stats/data */
+    --blue: #14ABE8;
+    --blue-deep: #0E8CC0;
+    --blue-soft: #E6F6FD;
+    --ink: #0B2230;
+    --paper: #FFFFFF;
+    --paper-2: #F7FBFD;
+    --slate: #5C7383;
+    --line: #E0EEF5;
     --card: #FFFFFF;
   }
 
+  [data-theme="dark"] {
+    --blue: #2BC0F5;
+    --blue-deep: #14ABE8;
+    --blue-soft: #11313F;
+    --ink: #EAF4F9;
+    --paper: #0A1A24;
+    --paper-2: #0E222E;
+    --slate: #93AAB8;
+    --line: #1C3A48;
+    --card: #0F2430;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
-
   body {
     background: var(--paper);
     color: var(--ink);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    transition: background 0.3s, color 0.3s;
   }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
 
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
-
-  /* ── NAV ───────────────────────────────── */
+  /* NAV */
   nav {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--line);
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; background: var(--paper); z-index: 50;
+    transition: background 0.3s, border-color 0.3s;
   }
-  .brand {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500; font-size: 17px;
-    letter-spacing: -0.5px;
-    color: var(--ink);
-    text-decoration: none;
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand img { height: 26px; width: auto; }
+  .brand-text {
+    font-family: 'Sora', sans-serif; font-weight: 600; font-size: 18px;
+    letter-spacing: -0.3px; color: var(--ink);
   }
-  .brand span { color: var(--signal); }
-  .nav-links { display: flex; gap: 28px; }
+  .nav-right { display: flex; align-items: center; gap: 26px; }
+  .nav-links { display: flex; gap: 24px; }
   .nav-links a {
     color: var(--slate); text-decoration: none;
-    font-size: 14px; font-weight: 500;
-    transition: color 0.2s;
+    font-size: 14px; font-weight: 500; transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--signal); }
-  @media (max-width: 600px) { .nav-links { display: none; } }
+  .nav-links a:hover { color: var(--blue); }
+  @media (max-width: 680px) { .nav-links { display: none; } }
 
-  /* ── HERO ──────────────────────────────── */
-  .hero { padding: 96px 0 80px; }
-  .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; color: var(--mint);
-    letter-spacing: 0.5px; margin-bottom: 24px;
-    display: flex; align-items: center; gap: 10px;
+  .controls { display: flex; gap: 8px; align-items: center; }
+  .ctrl-btn {
+    background: var(--paper-2); border: 1px solid var(--line);
+    color: var(--ink); border-radius: 8px; cursor: pointer;
+    font-size: 13px; font-weight: 500; font-family: 'Inter', sans-serif;
+    padding: 7px 11px; transition: all 0.2s; display: flex; align-items: center; gap: 5px;
   }
-  .eyebrow::before {
-    content: ""; width: 28px; height: 1px; background: var(--mint);
+  .ctrl-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* HERO */
+  .hero { padding: 90px 0 70px; text-align: center; }
+  .hero img.mark { height: 92px; width: auto; margin-bottom: 32px; }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+    color: var(--blue); letter-spacing: 1px; margin-bottom: 22px;
+    text-transform: uppercase;
   }
   .hero h1 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: clamp(44px, 7vw, 82px);
-    line-height: 1.02;
-    letter-spacing: -1.5px;
-    margin-bottom: 28px;
+    font-family: 'Sora', sans-serif; font-weight: 700;
+    font-size: clamp(38px, 6vw, 66px); line-height: 1.05;
+    letter-spacing: -1.5px; margin-bottom: 26px;
   }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--signal);
-  }
+  .hero h1 .accent { color: var(--blue); }
   .hero .lede {
-    font-size: clamp(17px, 2vw, 20px);
-    color: var(--slate);
-    max-width: 560px;
-    margin-bottom: 40px;
+    font-size: clamp(16px, 2vw, 19px); color: var(--slate);
+    max-width: 580px; margin: 0 auto 38px;
   }
-  .cta-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 14px 26px;
-    border-radius: 2px;
-    font-size: 15px; font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s;
+    padding: 14px 28px; border-radius: 10px;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    transition: all 0.2s; font-family: 'Inter', sans-serif; cursor: pointer; border: none;
   }
-  .btn-primary {
-    background: var(--signal); color: #fff;
-  }
-  .btn-primary:hover { background: var(--signal-deep); transform: translateY(-1px); }
-  .btn-ghost {
-    color: var(--ink); border: 1px solid var(--line);
-  }
-  .btn-ghost:hover { border-color: var(--ink); }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-primary:hover { background: var(--blue-deep); transform: translateY(-2px); }
+  .btn-ghost { color: var(--ink); border: 1px solid var(--line); background: transparent; }
+  .btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
 
-  /* ── MOTTO STRIP ───────────────────────── */
+  /* MOTTO */
   .motto {
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    padding: 28px 0;
-    display: flex; align-items: baseline; gap: 16px;
-    flex-wrap: wrap;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: 30px 0; display: flex; align-items: center; gap: 16px;
+    flex-wrap: wrap; justify-content: center; text-align: center;
   }
   .motto .quote {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: clamp(20px, 3vw, 28px);
-    color: var(--ink);
+    font-family: 'Sora', sans-serif; font-weight: 500; font-style: normal;
+    font-size: clamp(19px, 2.6vw, 26px); color: var(--ink);
   }
-  .motto .since {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; color: var(--slate);
-    margin-left: auto;
-  }
+  .motto .quote em { color: var(--blue); font-style: normal; }
 
-  /* ── SECTION HEADERS ───────────────────── */
-  section { padding: 80px 0; }
+  /* SECTIONS */
+  section { padding: 78px 0; }
   .sec-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; color: var(--slate);
-    letter-spacing: 0.5px; margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+    color: var(--blue); letter-spacing: 0.5px; margin-bottom: 12px;
   }
   .sec-title {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: clamp(28px, 4vw, 40px);
-    letter-spacing: -0.8px;
-    margin-bottom: 48px;
-    line-height: 1.1;
+    font-family: 'Sora', sans-serif; font-weight: 600;
+    font-size: clamp(26px, 4vw, 38px); letter-spacing: -0.8px;
+    margin-bottom: 44px; line-height: 1.1;
   }
 
-  /* ── ACTIVITIES ────────────────────────── */
-  .activities { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-  @media (max-width: 700px) { .activities { grid-template-columns: 1fr; } }
+  /* ACTIVITIES */
+  .activities { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 680px) { .activities { grid-template-columns: 1fr; } }
   .act {
-    background: var(--card);
-    padding: 32px;
-    transition: background 0.2s;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; padding: 30px; transition: all 0.25s;
   }
-  .act:hover { background: #FFFDF9; }
-  .act .num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; color: var(--signal);
-    margin-bottom: 14px;
-  }
-  .act h3 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600; font-size: 21px;
-    margin-bottom: 8px;
-    letter-spacing: -0.3px;
-  }
+  .act:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(20,171,232,0.08); }
+  .act .num { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--blue); margin-bottom: 14px; }
+  .act h3 { font-family: 'Sora', sans-serif; font-weight: 600; font-size: 20px; margin-bottom: 8px; letter-spacing: -0.3px; }
   .act p { font-size: 14.5px; color: var(--slate); }
 
-  /* ── SERVICES ──────────────────────────── */
-  .services { background: var(--ink); color: var(--paper); }
-  .services .sec-label { color: #8FA3B5; }
-  .services .sec-title { color: var(--paper); }
-  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-  @media (max-width: 700px) { .svc-grid { grid-template-columns: 1fr; gap: 24px; } }
-  .svc { border-top: 2px solid var(--signal); padding-top: 16px; }
-  .svc h4 {
-    font-size: 16px; font-weight: 600; margin-bottom: 6px;
+  /* SERVICES */
+  .services { background: var(--paper-2); transition: background 0.3s; }
+  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  @media (max-width: 680px) { .svc-grid { grid-template-columns: 1fr; gap: 22px; } }
+  .svc { border-top: 2px solid var(--blue); padding-top: 16px; }
+  .svc h4 { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+  .svc p { font-size: 14px; color: var(--slate); }
+
+  /* YOUTUBE */
+  .yt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 800px) { .yt-grid { grid-template-columns: 1fr; } }
+  .yt-card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 14px; overflow: hidden; transition: all 0.25s;
   }
-  .svc p { font-size: 14px; color: #9DAEBD; }
+  .yt-card:hover { border-color: var(--blue); transform: translateY(-3px); }
+  .yt-embed { position: relative; padding-bottom: 56.25%; height: 0; }
+  .yt-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+  .yt-meta { padding: 16px 18px; }
+  .yt-meta h4 { font-family: 'Sora', sans-serif; font-size: 14.5px; font-weight: 600; line-height: 1.35; }
+  .yt-cta { text-align: center; margin-top: 40px; }
 
-  /* ── CHANNEL CTA ───────────────────────── */
-  .channel { text-align: center; }
-  .channel .sec-title { margin-bottom: 16px; }
-  .channel p { color: var(--slate); max-width: 480px; margin: 0 auto 32px; }
-
-  /* ── FOOTER ────────────────────────────── */
+  /* FOOTER */
   footer {
-    border-top: 1px solid var(--line);
-    padding: 48px 0;
+    border-top: 1px solid var(--line); padding: 46px 0;
     display: flex; justify-content: space-between; align-items: center;
     flex-wrap: wrap; gap: 20px;
   }
-  .footer-brand {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 15px;
-  }
-  .footer-brand span { color: var(--signal); }
-  .social { display: flex; gap: 24px; }
-  .social a {
-    color: var(--slate); text-decoration: none;
-    font-size: 14px; font-weight: 500;
-    transition: color 0.2s;
-  }
-  .social a:hover { color: var(--signal); }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-brand img { height: 22px; }
+  .footer-brand span { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--slate); }
+  .social { display: flex; gap: 22px; flex-wrap: wrap; }
+  .social a { color: var(--slate); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .social a:hover { color: var(--blue); }
+
+  [data-lang-en] [data-fr], [data-lang-fr] [data-en] { display: none; }
 
   @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; scroll-behavior: auto !important; }
   }
 </style>
 </head>
-<body>
+<body data-lang-en>
 
 <div class="wrap">
   <nav>
-    <a href="#" class="brand">stat<span>·</span>inf</a>
-    <div class="nav-links">
-      <a href="#activities">Activities</a>
-      <a href="#services">Services</a>
-      <a href="#channel">Watch</a>
-      <a href="#contact">Contact</a>
+    <a href="index.html" class="brand">
+      <img src="assets/icon.png" alt="Stat-Inf logo">
+      <span class="brand-text">Stat-Inf</span>
+    </a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#about"><span data-en>About</span><span data-fr>À propos</span></a>
+        <a href="#activities"><span data-en>Activities</span><span data-fr>Activités</span></a>
+        <a href="#services"><span data-en>Services</span><span data-fr>Services</span></a>
+        <a href="#watch"><span data-en>Watch</span><span data-fr>Vidéos</span></a>
+        <a href="blog.html"><span data-en>Blog</span><span data-fr>Blog</span></a>
+      </div>
+      <div class="controls">
+        <button class="ctrl-btn" id="langBtn" onclick="toggleLang()">FR</button>
+        <button class="ctrl-btn" id="themeBtn" onclick="toggleTheme()">☀</button>
+      </div>
     </div>
   </nav>
 </div>
 
 <header class="wrap hero">
-  <div class="eyebrow">Community · Since 2017</div>
-  <h1>Statisticians and<br>computer scientists,<br><em>learning by sharing.</em></h1>
-  <p class="lede">Stat-Inf is a community built on one idea: by sharing what we know, we enrich others — and ourselves. Tutorials, concepts, and conversations in statistics, data science, and computing.</p>
+  <img src="assets/icon.png" class="mark" alt="Stat-Inf">
+  <div class="eyebrow"><span data-en>Community · Since 2017</span><span data-fr>Communauté · Depuis 2017</span></div>
+  <h1>
+    <span class="accent">Stat-Inf</span><br>
+    <span data-en>Learning by sharing.</span>
+    <span data-fr>Apprendre en partageant.</span>
+  </h1>
+  <p class="lede">
+    <span data-en>A community exploring statistics, data science, and computing. By sharing what we know, we enrich others and ourselves.</span>
+    <span data-fr>Une communauté autour des statistiques, de la data science et de l'informatique. En partageant ce que nous savons, nous enrichissons les autres et nous-mêmes.</span>
+  </p>
   <div class="cta-row">
-    <a href="#channel" class="btn btn-primary">Watch our tutorials →</a>
-    <a href="#activities" class="btn btn-ghost">See what we do</a>
+    <a href="#watch" class="btn btn-primary"><span data-en>Watch our tutorials →</span><span data-fr>Voir nos tutoriels →</span></a>
+    <a href="#activities" class="btn btn-ghost"><span data-en>What we do</span><span data-fr>Ce que nous faisons</span></a>
   </div>
 </header>
 
 <div class="wrap">
   <div class="motto">
-    <span class="quote">"In sharing, we enrich others — and ourselves."</span>
-    <span class="since">EST. 2017</span>
+    <span class="quote"><span data-en>"In sharing, we enrich others <em>and ourselves.</em>"</span><span data-fr>"En partageant, nous enrichissons les autres <em>et nous-mêmes.</em>"</span></span>
   </div>
 </div>
 
+<section id="about" class="wrap">
+  <div class="sec-label">00</div>
+  <h2 class="sec-title"><span data-en>Who we are</span><span data-fr>Qui sommes-nous ?</span></h2>
+  <div style="max-width:640px;">
+    <p style="font-size:18px; color:var(--ink); margin-bottom:28px;">
+      <span data-en>We are a network of students and professionals passionate about statistics. We believe that by sharing, we always learn more.</span>
+      <span data-fr>Nous sommes un réseau d'étudiants et de professionnels passionnés par les statistiques. Nous croyons qu'en partageant, on apprend toujours plus.</span>
+    </p>
+    <blockquote style="border-left:3px solid var(--blue); padding:8px 0 8px 22px; margin-top:8px;">
+      <p style="font-family:'Sora',sans-serif; font-size:clamp(18px,2.4vw,23px); font-weight:500; line-height:1.4; color:var(--ink); margin-bottom:10px;">
+        <span data-en>"If the termite mound lives, may it add earth to the earth."</span>
+        <span data-fr>« Si la termitière vit, qu'elle ajoute de la terre à la terre. »</span>
+      </p>
+      <cite style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--slate); font-style:normal;">Titinga Frédéric Pacéré</cite>
+    </blockquote>
+  </div>
+</section>
+
 <section id="activities" class="wrap">
-  <div class="sec-label">01 — What we do</div>
-  <h2 class="sec-title">Activities</h2>
+  <div class="sec-label">01</div>
+  <h2 class="sec-title"><span data-en>Activities</span><span data-fr>Activités</span></h2>
   <div class="activities">
     <div class="act">
       <div class="num">/ live-tuto</div>
-      <h3>Live tutorials</h3>
-      <p>Hands-on sessions, walking through real data tools and methods — from web scraping to missing-data handling in R.</p>
+      <h3><span data-en>Live tutorials</span><span data-fr>Tutoriels en direct</span></h3>
+      <p><span data-en>Hands-on sessions walking through real data tools and methods, from web scraping to missing-data handling in R.</span><span data-fr>Des sessions pratiques sur des outils et méthodes concrets, du web scraping au traitement des données manquantes sous R.</span></p>
     </div>
     <div class="act">
       <div class="num">/ stat-it</div>
-      <h3>Stat-It</h3>
-      <p>Short, focused explainers on a single concept in statistics or computing. State it, simply.</p>
+      <h3><span data-en>Stat-It</span><span data-fr>Stat-It</span></h3>
+      <p><span data-en>Short, focused explainers on a single concept in statistics or computing. State it, simply.</span><span data-fr>De courts formats centrés sur une seule notion en statistiques ou en informatique. Dis-le, simplement.</span></p>
     </div>
     <div class="act">
-      <div class="num">/ metiers</div>
-      <h3>Data careers</h3>
-      <p>Practitioners share their daily work, the skills that matter, and the paths into data professions.</p>
+      <div class="num">/ métiers</div>
+      <h3><span data-en>Data careers</span><span data-fr>Métiers de la data</span></h3>
+      <p><span data-en>Practitioners share their daily work, the skills that matter, and the paths into data professions.</span><span data-fr>Des spécialistes partagent leur quotidien, les compétences clés et les chemins vers les métiers de la data.</span></p>
     </div>
     <div class="act">
       <div class="num">/ formations</div>
-      <h3>Free training</h3>
-      <p>Structured courses — from statistical programming in SAS and R to the foundations of data culture.</p>
+      <h3><span data-en>Free training</span><span data-fr>Formations gratuites</span></h3>
+      <p><span data-en>Structured courses, from statistical programming in SAS and R to the foundations of data culture.</span><span data-fr>Des formations structurées, de la programmation statistique sous SAS et R aux fondements de la culture data.</span></p>
     </div>
   </div>
 </section>
 
 <section id="services" class="services">
   <div class="wrap">
-    <div class="sec-label">02 — How we help</div>
-    <h2 class="sec-title">Areas of expertise</h2>
+    <div class="sec-label">02</div>
+    <h2 class="sec-title"><span data-en>Areas of expertise</span><span data-fr>Domaines d'expertise</span></h2>
     <div class="svc-grid">
       <div class="svc">
-        <h4>Data science</h4>
-        <p>From exploratory analysis to modelling and segmentation.</p>
+        <h4><span data-en>Data science</span><span data-fr>Data science</span></h4>
+        <p><span data-en>From exploratory analysis to modelling and segmentation.</span><span data-fr>De l'analyse exploratoire à la modélisation et la segmentation.</span></p>
       </div>
       <div class="svc">
-        <h4>Biostatistics</h4>
-        <p>High-dimensional methods, including genome sequencing analysis.</p>
+        <h4><span data-en>Biostatistics</span><span data-fr>Biostatistique</span></h4>
+        <p><span data-en>High-dimensional methods, including genome sequencing analysis.</span><span data-fr>Méthodes en grande dimension, dont l'analyse de données de séquençage.</span></p>
       </div>
       <div class="svc">
-        <h4>Data engineering</h4>
-        <p>Collection, capture, storage, and the lifecycle of your data.</p>
+        <h4><span data-en>Data engineering</span><span data-fr>Data engineering</span></h4>
+        <p><span data-en>Collection, capture, storage, and the lifecycle of your data.</span><span data-fr>Collecte, capture, stockage et cycle de vie de vos données.</span></p>
       </div>
       <div class="svc">
-        <h4>Data visualisation</h4>
-        <p>Turning numbers into figures people can actually read.</p>
+        <h4><span data-en>Data visualisation</span><span data-fr>Visualisation</span></h4>
+        <p><span data-en>Turning numbers into figures people can actually read.</span><span data-fr>Transformer les chiffres en figures réellement lisibles.</span></p>
       </div>
       <div class="svc">
-        <h4>Scientific writing</h4>
-        <p>Support for articles, bibliography tools, LaTeX, and version control.</p>
+        <h4><span data-en>Scientific writing</span><span data-fr>Rédaction scientifique</span></h4>
+        <p><span data-en>Support for articles, bibliography tools, LaTeX, and version control.</span><span data-fr>Aide à la rédaction d'articles, outils bibliographiques, LaTeX et versionnage.</span></p>
       </div>
       <div class="svc">
-        <h4>Training</h4>
-        <p>Tailored courses to build data skills at every level.</p>
+        <h4><span data-en>Training</span><span data-fr>Formation</span></h4>
+        <p><span data-en>Tailored courses to build data skills at every level.</span><span data-fr>Des formations adaptées à tous les niveaux.</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="channel" class="wrap channel">
-  <div class="sec-label">03 — On YouTube</div>
-  <h2 class="sec-title">Learn with us</h2>
-  <p>Our channel hosts years of tutorials and explainers in statistics, data science, and computing — in French and English.</p>
-  <a href="https://www.youtube.com/channel/UCV5ZRqbgrMA0R6gvFuNF42A" class="btn btn-primary" target="_blank" rel="noopener">Visit the channel →</a>
+<section id="watch" class="wrap">
+  <div class="sec-label">03</div>
+  <h2 class="sec-title"><span data-en>Recent videos</span><span data-fr>Vidéos récentes</span></h2>
+  <div class="yt-grid">
+    <div class="yt-card">
+      <div class="yt-embed"><iframe src="https://www.youtube.com/embed/9-5R60NMMUU" title="Pathway Analysis EP 01" loading="lazy" allowfullscreen></iframe></div>
+      <div class="yt-meta"><h4>What Are Biological Pathways and Proteins? | Pathway Analysis EP 01</h4></div>
+    </div>
+    <div class="yt-card">
+      <div class="yt-embed"><iframe src="https://www.youtube.com/embed/BZNNHOWYYo4" title="BeautifulSoup WebScraping" loading="lazy" allowfullscreen></iframe></div>
+      <div class="yt-meta"><h4>Introduction au package Python BeautifulSoup : WebScraping</h4></div>
+    </div>
+    <div class="yt-card">
+      <div class="yt-embed"><iframe src="https://www.youtube.com/embed/iW7z2SAfpfs" title="Données manquantes R" loading="lazy" allowfullscreen></iframe></div>
+      <div class="yt-meta"><h4>Traitement des données manquantes : cas pratique sur R</h4></div>
+    </div>
+  </div>
+  <div class="yt-cta">
+    <a href="https://www.youtube.com/channel/UCV5ZRqbgrMA0R6gvFuNF42A" class="btn btn-primary" target="_blank" rel="noopener"><span data-en>Visit the channel →</span><span data-fr>Voir la chaîne →</span></a>
+  </div>
 </section>
 
-<footer id="contact" class="wrap">
-  <div class="footer-brand">stat<span>·</span>inf — Learning by sharing</div>
+<div class="wrap" style="border-top:1px solid var(--line);">
+  <div style="text-align:center; padding:34px 0 10px;">
+    <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=ty-XrizHVHJEJd-b-DURExc4tSM2udzhx1O15T36rVY&cl=ffffff&w=a"></script>
+    <!-- Example:
+    <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?cl=ffffff&w=a&t=tt&d=YOUR_CODE&co=14abe8&cmo=14abe8&cmn=0e8cc0" async></script>
+    -->
+    <p style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--slate);">
+      <span data-en>Visitors from around the world</span><span data-fr>Visiteurs du monde entier</span>
+    </p>
+  </div>
+</div>
+
+<footer class="wrap">
+  <div class="footer-brand">
+    <img src="assets/icon.png" alt="Stat-Inf">
+    <span>Learning by sharing</span>
+  </div>
   <div class="social">
     <a href="https://www.youtube.com/channel/UCV5ZRqbgrMA0R6gvFuNF42A" target="_blank" rel="noopener">YouTube</a>
     <a href="https://www.linkedin.com/company/102782403/" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://twitter.com/SInformaticiens" target="_blank" rel="noopener">Twitter</a>
+    <a href="https://x.com/stat_inf" target="_blank" rel="noopener">X</a>
     <a href="https://github.com/infstat" target="_blank" rel="noopener">GitHub</a>
   </div>
 </footer>
+
+<script>
+  // Theme — dark default
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    document.getElementById('themeBtn').textContent = t === 'dark' ? '☀' : '☾';
+    try { localStorage.setItem('statinf-theme', t); } catch(e) {}
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme');
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  }
+  (function() {
+    let saved = 'dark';
+    try { saved = localStorage.getItem('statinf-theme') || 'dark'; } catch(e) {}
+    applyTheme(saved);
+  })();
+
+  // Language
+  function applyLang(l) {
+    document.body.setAttribute(l === 'fr' ? 'data-lang-fr' : 'data-lang-en', '');
+    document.body.removeAttribute(l === 'fr' ? 'data-lang-en' : 'data-lang-fr');
+    document.documentElement.lang = l;
+    document.getElementById('langBtn').textContent = l === 'fr' ? 'EN' : 'FR';
+    try { localStorage.setItem('statinf-lang', l); } catch(e) {}
+  }
+  function toggleLang() {
+    const cur = document.documentElement.lang === 'fr' ? 'fr' : 'en';
+    applyLang(cur === 'fr' ? 'en' : 'fr');
+  }
+  (function() {
+    let saved = 'en';
+    try { saved = localStorage.getItem('statinf-lang') || 'en'; } catch(e) {}
+    applyLang(saved);
+  })();
+</script>
 
 </body>
 </html>
