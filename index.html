@@ -248,11 +248,55 @@
 <section id="watch" class="wrap">
   <div class="sec-label">03</div>
   <h2 class="sec-title"><span data-en>Recent videos</span><span data-fr>Vidéos récentes</span></h2>
-  <div class="yt-grid">
-    <div class="yt-card"><div class="yt-embed"><iframe src="https://www.youtube.com/embed/9-5R60NMMUU" title="Pathway Analysis EP 01" loading="lazy" allowfullscreen></iframe></div><div class="yt-meta"><h4>What Are Biological Pathways and Proteins? | Pathway Analysis EP 01</h4></div></div>
-    <div class="yt-card"><div class="yt-embed"><iframe src="https://www.youtube.com/embed/BZNNHOWYYo4" title="BeautifulSoup WebScraping" loading="lazy" allowfullscreen></iframe></div><div class="yt-meta"><h4>Introduction au package Python BeautifulSoup : WebScraping</h4></div></div>
-    <div class="yt-card"><div class="yt-embed"><iframe src="https://www.youtube.com/embed/iW7z2SAfpfs" title="Données manquantes R" loading="lazy" allowfullscreen></iframe></div><div class="yt-meta"><h4>Traitement des données manquantes : cas pratique sur R</h4></div></div>
+  <div class="yt-grid" id="yt-grid">
+    <div class="yt-card" style="grid-column:1/-1;text-align:center;padding:30px;color:var(--slate);">
+      <span data-en>Loading videos...</span><span data-fr>Chargement des vidéos...</span>
+    </div>
   </div>
+
+  <script>
+  (function() {
+    var API_KEY    = 'AIzaSyBVSsDs8jMwiHlp7-HN_UXV1NZl-QcKU-U';
+    var CHANNEL_ID = 'UCV5ZRqbgrMA0R6gvFuNF42A';
+
+    var url = 'https://www.googleapis.com/youtube/v3/search'
+      + '?key='        + API_KEY
+      + '&channelId='  + CHANNEL_ID
+      + '&part=snippet'
+      + '&order=date'
+      + '&type=video'
+      + '&maxResults=3';
+
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var grid = document.getElementById('yt-grid');
+        if (!data.items || data.items.length === 0) throw new Error('no items');
+        grid.innerHTML = '';
+        data.items.forEach(function(item) {
+          var vid   = item.id.videoId;
+          var title = item.snippet.title
+                        .replace(/&/g,'&amp;')
+                        .replace(/</g,'&lt;')
+                        .replace(/>/g,'&gt;')
+                        .replace(/"/g,'&quot;');
+          grid.innerHTML +=
+            '<div class="yt-card">'
+            + '<div class="yt-embed"><iframe src="https://www.youtube.com/embed/' + vid + '" '
+            + 'title="' + title + '" loading="lazy" allowfullscreen></iframe></div>'
+            + '<div class="yt-meta"><h4>' + title + '</h4></div>'
+            + '</div>';
+        });
+      })
+      .catch(function() {
+        document.getElementById('yt-grid').innerHTML =
+          '<div class="yt-card" style="grid-column:1/-1;text-align:center;padding:30px;color:var(--slate);">'
+          + 'Impossible de charger les vidéos. '
+          + '<a href="https://www.youtube.com/channel/UCV5ZRqbgrMA0R6gvFuNF42A" '
+          + 'style="color:var(--blue)">Voir la chaîne →</a></div>';
+      });
+  })();
+  </script>
   <div class="yt-cta">
     <a href="https://www.youtube.com/channel/UCV5ZRqbgrMA0R6gvFuNF42A" class="btn btn-primary" target="_blank" rel="noopener"><span data-en>Visit the channel →</span><span data-fr>Voir la chaîne →</span></a>
   </div>
@@ -334,7 +378,7 @@
 
 <div class="wrap" style="border-top:1px solid var(--line);">
   <div style="text-align:center; padding:34px 0 10px;">
-    <script type='text/javascript' id='mapmyvisitors' src='https://mapmyvisitors.com/map.js?cl=ffffff&w=450&t=n&d=ty-XrizHVHJEJd-b-DURExc4tSM2udzhx1O15T36rVY'></script>
+    <script type='text/javascript' id='mapmyvisitors' src='https://mapmyvisitors.com/map.js?cl=ffffff&w=600&t=n&d=ty-XrizHVHJEJd-b-DURExc4tSM2udzhx1O15T36rVY'></script>
     <!-- Example:
     <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?cl=ffffff&w=a&t=tt&d=YOUR_CODE&co=14abe8&cmo=14abe8&cmn=0e8cc0" async></script>
     -->
